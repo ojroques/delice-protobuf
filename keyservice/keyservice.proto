@@ -1,0 +1,21 @@
+syntax = "proto3";
+package keyservice;
+
+import "google/protobuf/empty.proto";
+
+option go_package = "github.com/ojroques/delice-protobuf/keyservice";
+
+message KeyID {
+  bytes value = 1;
+}
+
+message KeyPackage {
+  KeyID id = 1;
+  bytes value = 2;
+}
+
+service KeyStore {
+  rpc Add(KeyPackage) returns (google.protobuf.Empty) {}
+  rpc Get(KeyID) returns (KeyPackage) {}
+  rpc Remove(KeyID) returns (google.protobuf.Empty) {}
+}

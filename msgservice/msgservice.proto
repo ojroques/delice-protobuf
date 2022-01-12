@@ -1,0 +1,74 @@
+syntax = "proto3";
+package msgservice;
+
+import "google/protobuf/empty.proto";
+import "keyservice/keyservice.proto";
+
+option go_package = "github.com/ojroques/delice-protobuf/msgservice";
+
+message GroupInfo {
+  bytes groupID = 1;
+  uint64 epoch = 2;
+}
+
+message MLSMessage {
+  enum ContentType {
+    INVALID = 0;
+    APPLICATION = 1;
+    PROPOSAL = 2;
+    COMMIT = 3;
+  }
+  GroupInfo groupInfo = 1;
+  ContentType contentType = 2;
+  bytes value = 3;
+  optional bytes digest = 4;
+  optional bytes senderID = 5;
+}
+
+message MLSWelcome {
+  bytes value = 1;
+  optional bytes senderID = 2;
+}
+
+message SendRequest {
+  MLSMessage msg = 1;
+}
+
+message GetGroupInfoRequest {
+  bytes groupID = 1;
+}
+
+message GetCommitRequest {
+  GroupInfo groupInfo = 1;
+}
+
+message GetProposalRequest {
+  GroupInfo groupInfo = 1;
+  bytes digest = 2;
+}
+
+message SendWelcomesRequest {
+  repeated keyservice.KeyID keyID = 1;
+  MLSWelcome msg = 2;
+}
+
+message GetWelcomesRequest {
+  keyservice.KeyID keyID = 1;
+}
+
+message RemoveWelcomesRequest {
+  keyservice.KeyID keyID = 1;
+}
+
+service MsgStore {
+  rpc SendMessage(SendRequest) returns (google.protobuf.Empty) {}
+  rpc SendMessages(stream SendRequest) returns (google.protobuf.Empty) {}
+  rpc GetGroupInfo(GetGroupInfoRequest) returns (GroupInfo) {}
+  rpc GetProposal(GetProposalRequest) returns (MLSMessage) {}
+  rpc GetProposals(stream GetProposalRequest) returns (stream MLSMessage) {}
+  rpc GetCommit(GetCommitRequest) returns (MLSMessage) {}
+  rpc GetCommits(stream GetCommitRequest) returns (stream MLSMessage) {}
+  rpc SendWelcomes(SendWelcomesRequest) returns (google.protobuf.Empty) {}
+  rpc GetWelcomes(GetWelcomesRequest) returns (stream MLSWelcome) {}
+  rpc RemoveWelcomes(RemoveWelcomesRequest) returns (google.protobuf.Empty) {}
+}
