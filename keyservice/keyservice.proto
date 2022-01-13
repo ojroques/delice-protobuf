@@ -3,8 +3,6 @@ package keyservice;
 
 import "google/protobuf/empty.proto";
 
-option go_package = "github.com/ojroques/delice-protobuf/keyservice";
-
 message KeyID {
   bytes value = 1;
 }

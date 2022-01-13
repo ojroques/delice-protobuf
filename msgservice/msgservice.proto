@@ -4,8 +4,6 @@ package msgservice;
 import "google/protobuf/empty.proto";
 import "keyservice/keyservice.proto";
 
-option go_package = "github.com/ojroques/delice-protobuf/msgservice";
-
 message GroupInfo {
   bytes groupID = 1;
   uint64 epoch = 2;
