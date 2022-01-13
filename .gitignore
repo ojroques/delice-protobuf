@@ -1,0 +1,6 @@
+# Go generated files
+*.go
+
+# C++ generated files
+*.cc
+*.h
