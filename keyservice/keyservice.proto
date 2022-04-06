@@ -3,17 +3,17 @@ package keyservice;
 
 import "google/protobuf/empty.proto";
 
-message KeyID {
+message KeyPackageRef {
   bytes value = 1;
 }
 
 message KeyPackage {
-  KeyID id = 1;
+  KeyPackageRef ref = 1;
   bytes value = 2;
 }
 
 service KeyStore {
   rpc Add(KeyPackage) returns (google.protobuf.Empty) {}
-  rpc Get(KeyID) returns (KeyPackage) {}
-  rpc Remove(KeyID) returns (google.protobuf.Empty) {}
+  rpc Get(KeyPackageRef) returns (KeyPackage) {}
+  rpc Remove(KeyPackageRef) returns (google.protobuf.Empty) {}
 }
