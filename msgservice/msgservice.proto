@@ -46,16 +46,16 @@ message GetProposalRequest {
 }
 
 message SendWelcomesRequest {
-  repeated keyservice.KeyPackageRef keyPackageRef = 1;
+  repeated keyservice.KeyPackageRef refs = 1;
   MLSWelcome msg = 2;
 }
 
 message GetWelcomesRequest {
-  keyservice.KeyPackageRef keyPackageRef = 1;
+  keyservice.KeyPackageRef ref = 1;
 }
 
 message RemoveWelcomesRequest {
-  keyservice.KeyPackageRef keyPackageRef = 1;
+  keyservice.KeyPackageRef ref = 1;
 }
 
 service MsgStore {
